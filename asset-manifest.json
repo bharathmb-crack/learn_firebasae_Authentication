@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/learn_firebasae_Authentication/static/css/main.e7fb19de.css",
+    "main.js": "/learn_firebasae_Authentication/static/js/main.4e8f8fe0.js",
+    "index.html": "/learn_firebasae_Authentication/index.html",
+    "main.e7fb19de.css.map": "/learn_firebasae_Authentication/static/css/main.e7fb19de.css.map",
+    "main.4e8f8fe0.js.map": "/learn_firebasae_Authentication/static/js/main.4e8f8fe0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e7fb19de.css",
+    "static/js/main.4e8f8fe0.js"
+  ]
+}
