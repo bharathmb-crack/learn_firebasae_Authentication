@@ -1,30 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { auth } from "./firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 function App() {
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, []);
 
   const register = async () => {
     try {
-      const createUser = await createUserWithEmailAndPassword(
+      const user = await createUserWithEmailAndPassword(
         auth,
         createEmail,
         createPassword
       );
-      console.log(createUser);
+      console.log(user);
     } catch (error) {
       console.log(error.message);
       alert(error.message);
     }
   };
 
-  // const login = async () => {};
-  // const logout = async () => {};
+  const login = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        signInEmail,
+        signInPassword
+      );
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+      alert(error.message);
+    }
+  };
+  const logout = async () => {
+    await signOut(auth);
+  };
 
   return (
     <div className="App">
@@ -53,24 +79,25 @@ function App() {
           type="text"
           placeholder="Email..."
           onChange={(event) => {
-            setCreatePassword(event.target.value);
+            setSignInEmail(event.target.value);
           }}
         />
         <input
           type="text"
           placeholder="Password..."
           onChange={(event) => {
-            setCreatePassword(event.target.value);
+            setSignInPassword(event.target.value);
           }}
         />
-        <button>Login</button>
+        <button onClick={login}>Login</button>
       </div>
       <div>
         <p>
           {" "}
-          <span className="large-text">Logged user name:</span> loged name here
+          <span className="large-text">Logged user name:</span>
+          {user?.email}
         </p>
-        <button>sign out</button>
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );
